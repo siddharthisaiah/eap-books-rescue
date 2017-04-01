@@ -2,6 +2,7 @@ import mechanize
 from bs4 import BeautifulSoup
 import os
 import csv
+import zipfile
 
 '''
 Program to download images from the endangered archives collection from http://eap.bl.uk/database/collections.a4d
@@ -14,22 +15,22 @@ urls = ['http://eap.bl.uk/database/results.a4d?projID=EAP183',
         ]
 
 # create a directory to work in and cd into it
-os.mkdir(os.path.join(os.getcwd(), 'eapbl-project'))
+####################### os.mkdir(os.path.join(os.getcwd(), 'eapbl-project'))
 os.chdir('eapbl-project')
 
 br = mechanize.Browser()
 abspath = os.path.abspath('.')
 
-for url in urls:
-    html_page = br.open(url).read()
-    soup = BeautifulSoup(html_page, 'html.parser')
-    results = soup.select('#results')
-    heading = results[0].find('th').h3.text
-    heading = heading.replace(':', '-')
-    os.mkdir(os.path.join(abspath, heading))
-
-    with open(os.path.join(abspath+'/'+heading, 'page.html'), 'w') as f:
-        f.write(html_page)
+# for url in urls:
+#     html_page = br.open(url).read()
+#     soup = BeautifulSoup(html_page, 'html.parser')
+#     results = soup.select('#results')
+#     heading = results[0].find('th').h3.text
+#     heading = heading.replace(':', '-')
+#     os.mkdir(os.path.join(abspath, heading))
+#
+#     with open(os.path.join(abspath+'/'+heading, 'page.html'), 'w') as f:
+#         f.write(html_page)
 
 # list all the directories
 dirs = [d for d in os.listdir('.') if os.path.isdir(d) and not d.startswith('.')]
@@ -88,6 +89,15 @@ for directory in dirs:
         except AttributeError:
             print "AttributeError - There may be no data to parse"
             pass
+
+        # filter non-html files and zip it renaming them as 'name_of_current_directory' + '.zip'
+        # check if there are more files than the already thumbs.html
+        if len(os.listdir('.')) > 1:
+            for each_file in os.listdir('.'):
+                with zipfile.ZipFile(os.path.basename(os.getcwd()) + ".zip", 'a') as image_zip:
+                    if not each_file.endswith('.html'):
+                        image_zip.write(each_file)
+
 
         os.chdir('..')
 
