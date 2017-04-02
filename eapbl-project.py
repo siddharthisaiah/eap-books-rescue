@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import mechanize
 from bs4 import BeautifulSoup
 import os
@@ -11,9 +13,24 @@ Program to download images from the endangered archives collection from http://e
 '''
 
 # list of project urls to downloads
-urls = [#'http://eap.bl.uk/database/results.a4d?projID=EAP183',
-        # 'http://eap.bl.uk/database/results.a4d?projID=EAP314',
-        # 'http://eap.bl.uk/database/results.a4d?projID=EAP458',
+urls = ['http://eap.bl.uk/database/results.a4d?projID=EAP023',  # EAP023 Preserving Marathi manuscripts and making them accessible
+        'http://eap.bl.uk/database/results.a4d?projID=EAP038',  # EAP038 Survey, conservation and archiving of pre-1947 Telugu printed materials in India
+        'http://eap.bl.uk/database/results.a4d?projID=EAP127',  # EAP127 Archiving 'popular market' Bengali books
+        'http://eap.bl.uk/database/results.a4d?projID=EAP183',  # EAP183 Preserving early print literature on the history of Tamilnadu
+        'http://eap.bl.uk/database/results.a4d?projID=EAP191',  # EAP191 Strategies for archiving the endangered publications of French India (1800-1953)
+        'http://eap.bl.uk/database/results.a4d?projID=EAP201',  # EAP201 Study and collection of Hakku Patras and other documents among folk communities in Andhra Pradesh
+        'http://eap.bl.uk/database/results.a4d?projID=EAP208',  # EAP208 Preserving memory: documentation and digitisation of palm leaf manuscripts from northern Kerala, India
+        'http://eap.bl.uk/database/results.a4d?projID=EAP248',  # EAP248 Preserving more Marathi manuscripts and making them accessible - major project
+        'http://eap.bl.uk/database/results.a4d?projID=EAP261',  # EAP261 Digital archive of early Bengali drama
+        'http://eap.bl.uk/database/results.a4d?projID=EAP262',  # EAP262 Retrieval of two major and endangered newspapers: Jugantar and Amrita Bazar Patrika
+        'http://eap.bl.uk/database/results.a4d?projID=EAP314',  # EAP314 Rescuing Tamil customary law: locating and copying endangered records of village judicial assemblies (1870-1940)
+        'http://eap.bl.uk/database/results.a4d?projID=EAP341',  # EAP341 Rescuing text: retrieval and documentation of printed books and periodicals from public institutions in eastern India published prior to 1950 - major project
+        'http://eap.bl.uk/database/results.a4d?projID=EAP372',  # EAP372 Preserving early periodicals and newspapers of Tamilnadu and Pondichery
+        'http://eap.bl.uk/database/results.a4d?projID=EAP458',  # EAP458 Constituting a digital archive of Tamil agrarian history during the colonial period
+        'http://eap.bl.uk/database/results.a4d?projID=EAP584',  # EAP584 Preserving memory II - documentation and digitisation of palm leaf manuscripts from Kerala, India
+        'http://eap.bl.uk/database/results.a4d?projID=EAP689',  # EAP689 Constituting a digital archive of Tamil agrarian history (1650-1950) - phase II
+        'http://eap.bl.uk/database/results.a4d?projID=EAP692',  # EAP692 Documentation of endangered temple art of Tamil Nadu
+        'http://eap.bl.uk/database/results.a4d?projID=EAP737'  	# EAP737 Representing Self and Family. Preserving early Tamil studio photography
         ]
 
 # create a directory to work in and cd into it
