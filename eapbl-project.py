@@ -4,6 +4,7 @@ import os
 import csv
 import zipfile
 import shutil
+import time
 
 '''
 Program to download images from the endangered archives collection from http://eap.bl.uk/database/collections.a4d
@@ -77,7 +78,11 @@ for directory in dirs:
     # read the pubs.csv, create a folder for every publication
     with open('pubs.csv', 'r') as f:
         abspath = os.path.abspath('.')
+
         br = mechanize.Browser()
+        user_agent_string = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20100101 Firefox/12.0'
+        br.addheaders = [('User-Agent', user_agent_string)]
+
         reader = csv.reader(f, delimiter='@')
         for row in reader:
             title = row[0].replace('/', '-').replace(':', '-')
@@ -127,6 +132,8 @@ for directory in dirs:
                 else:
                     print "Already exists! image: " + image_file_name
 
+            # sleep for 3 seconds after downloading a set of images
+            time.sleep(3)
         except AttributeError:
             print "AttributeError - There may be no images available yet."
             pass
