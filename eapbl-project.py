@@ -29,8 +29,7 @@ urls = ['http://eap.bl.uk/database/results.a4d?projID=EAP023',  # EAP023 Preser
         'http://eap.bl.uk/database/results.a4d?projID=EAP458',  # EAP458 Constituting a digital archive of Tamil agrarian history during the colonial period
         'http://eap.bl.uk/database/results.a4d?projID=EAP584',  # EAP584 Preserving memory II - documentation and digitisation of palm leaf manuscripts from Kerala, India
         'http://eap.bl.uk/database/results.a4d?projID=EAP689',  # EAP689 Constituting a digital archive of Tamil agrarian history (1650-1950) - phase II
-        'http://eap.bl.uk/database/results.a4d?projID=EAP692',  # EAP692 Documentation of endangered temple art of Tamil Nadu
-        'http://eap.bl.uk/database/results.a4d?projID=EAP737'  	# EAP737 Representing Self and Family. Preserving early Tamil studio photography
+        'http://eap.bl.uk/database/results.a4d?projID=EAP692'   # EAP692 Documentation of endangered temple art of Tamil Nadu
         ]
 
 # create a directory to work in and cd into it
@@ -112,6 +111,7 @@ for directory in dirs:
 
             # don't load link and write if thumbs.html already exists
             if not os.path.exists(os.path.join(title, 'thumbs.html')):
+                time.sleep(0.25)
                 print "Loading publication link: " + link
                 page = br.open(link).read()
 
@@ -144,6 +144,7 @@ for directory in dirs:
                 # don't download image if already exists
                 if not os.path.exists(image_file_name):
                     # download and write the image
+                    time.sleep(0.25)
                     print "Retrieving image: " + full_image_link
                     br.retrieve(full_image_link, image_path)
                 else:
