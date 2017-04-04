@@ -7,6 +7,8 @@ import csv
 import zipfile
 import shutil
 import time
+import urllib2
+import random
 
 '''
 Program to download images from the endangered archives collection from http://eap.bl.uk/database/collections.a4d
@@ -14,23 +16,37 @@ Program to download images from the endangered archives collection from http://e
 
 # list of project urls to downloads
 urls = ['http://eap.bl.uk/database/results.a4d?projID=EAP023',  # EAP023 Preserving Marathi manuscripts and making them accessible
-        'http://eap.bl.uk/database/results.a4d?projID=EAP038',  # EAP038 Survey, conservation and archiving of pre-1947 Telugu printed materials in India
-        'http://eap.bl.uk/database/results.a4d?projID=EAP127',  # EAP127 Archiving 'popular market' Bengali books
-        'http://eap.bl.uk/database/results.a4d?projID=EAP183',  # EAP183 Preserving early print literature on the history of Tamilnadu
-        'http://eap.bl.uk/database/results.a4d?projID=EAP191',  # EAP191 Strategies for archiving the endangered publications of French India (1800-1953)
-        'http://eap.bl.uk/database/results.a4d?projID=EAP201',  # EAP201 Study and collection of Hakku Patras and other documents among folk communities in Andhra Pradesh
-        'http://eap.bl.uk/database/results.a4d?projID=EAP208',  # EAP208 Preserving memory: documentation and digitisation of palm leaf manuscripts from northern Kerala, India
-        'http://eap.bl.uk/database/results.a4d?projID=EAP248',  # EAP248 Preserving more Marathi manuscripts and making them accessible - major project
-        'http://eap.bl.uk/database/results.a4d?projID=EAP261',  # EAP261 Digital archive of early Bengali drama
-        'http://eap.bl.uk/database/results.a4d?projID=EAP262',  # EAP262 Retrieval of two major and endangered newspapers: Jugantar and Amrita Bazar Patrika
-        'http://eap.bl.uk/database/results.a4d?projID=EAP314',  # EAP314 Rescuing Tamil customary law: locating and copying endangered records of village judicial assemblies (1870-1940)
-        'http://eap.bl.uk/database/results.a4d?projID=EAP341',  # EAP341 Rescuing text: retrieval and documentation of printed books and periodicals from public institutions in eastern India published prior to 1950 - major project
-        'http://eap.bl.uk/database/results.a4d?projID=EAP372',  # EAP372 Preserving early periodicals and newspapers of Tamilnadu and Pondichery
-        'http://eap.bl.uk/database/results.a4d?projID=EAP458',  # EAP458 Constituting a digital archive of Tamil agrarian history during the colonial period
-        'http://eap.bl.uk/database/results.a4d?projID=EAP584',  # EAP584 Preserving memory II - documentation and digitisation of palm leaf manuscripts from Kerala, India
-        'http://eap.bl.uk/database/results.a4d?projID=EAP689',  # EAP689 Constituting a digital archive of Tamil agrarian history (1650-1950) - phase II
-        'http://eap.bl.uk/database/results.a4d?projID=EAP692'   # EAP692 Documentation of endangered temple art of Tamil Nadu
+        # 'http://eap.bl.uk/database/results.a4d?projID=EAP038',  # EAP038 Survey, conservation and archiving of pre-1947 Telugu printed materials in India
+        # 'http://eap.bl.uk/database/results.a4d?projID=EAP127',  # EAP127 Archiving 'popular market' Bengali books
+        # 'http://eap.bl.uk/database/results.a4d?projID=EAP183',  # EAP183 Preserving early print literature on the history of Tamilnadu
+        # 'http://eap.bl.uk/database/results.a4d?projID=EAP191',  # EAP191 Strategies for archiving the endangered publications of French India (1800-1953)
+        # 'http://eap.bl.uk/database/results.a4d?projID=EAP201',  # EAP201 Study and collection of Hakku Patras and other documents among folk communities in Andhra Pradesh
+        # 'http://eap.bl.uk/database/results.a4d?projID=EAP208',  # EAP208 Preserving memory: documentation and digitisation of palm leaf manuscripts from northern Kerala, India
+        # 'http://eap.bl.uk/database/results.a4d?projID=EAP248',  # EAP248 Preserving more Marathi manuscripts and making them accessible - major project
+        # 'http://eap.bl.uk/database/results.a4d?projID=EAP261',  # EAP261 Digital archive of early Bengali drama
+        # 'http://eap.bl.uk/database/results.a4d?projID=EAP262',  # EAP262 Retrieval of two major and endangered newspapers: Jugantar and Amrita Bazar Patrika
+        # 'http://eap.bl.uk/database/results.a4d?projID=EAP314',  # EAP314 Rescuing Tamil customary law: locating and copying endangered records of village judicial assemblies (1870-1940)
+        # 'http://eap.bl.uk/database/results.a4d?projID=EAP341',  # EAP341 Rescuing text: retrieval and documentation of printed books and periodicals from public institutions in eastern India published prior to 1950 - major project
+        # 'http://eap.bl.uk/database/results.a4d?projID=EAP372',  # EAP372 Preserving early periodicals and newspapers of Tamilnadu and Pondichery
+        # 'http://eap.bl.uk/database/results.a4d?projID=EAP458',  # EAP458 Constituting a digital archive of Tamil agrarian history during the colonial period
+        # 'http://eap.bl.uk/database/results.a4d?projID=EAP584',  # EAP584 Preserving memory II - documentation and digitisation of palm leaf manuscripts from Kerala, India
+        # 'http://eap.bl.uk/database/results.a4d?projID=EAP689',  # EAP689 Constituting a digital archive of Tamil agrarian history (1650-1950) - phase II
+        # 'http://eap.bl.uk/database/results.a4d?projID=EAP692'   # EAP692 Documentation of endangered temple art of Tamil Nadu
         ]
+
+user_agent_list = ['Mozilla/5.0 (compatible; MSIE 9.0; AOL 9.7; AOLBuild 4343.19; Windows NT 6.1; WOW64; Trident/5.0; FunWebProducts)',
+                   'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36',
+                   'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/532.2 (KHTML, like Gecko) ChromePlus/4.0.222.3 Chrome/4.0.222.3 Safari/532.2',
+                   'Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; AS; rv:11.0) like Gecko',
+                   'Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201',
+                   'Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20121202 Firefox/17.0 Iceweasel/17.0.1',
+                   'Opera/9.80 (X11; Linux i686; Ubuntu/14.10) Presto/2.12.388 Version/12.16',
+                   'Mozilla/5.0 (Windows; U; Windows NT 6.2; WOW64; rv:1.8.0.7) Gecko/20110321 MultiZilla/4.33.2.6a SeaMonkey/8.6.55',
+                   'Mozilla/5.0 (Linux; U; Android 4.0.3; ko-kr; LG-L160L Build/IML74K) AppleWebkit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30',
+                   'Opera/12.02 (Android 4.1; Linux; Opera Mobi/ADR-1111101157; U; en-US) Presto/2.9.201 Version/12.02'
+
+                   ]
+
 
 # create a directory to work in and cd into it
 try:
@@ -66,6 +82,9 @@ for url in urls:
     else:
         print "Not writing 'page.html' - already exists"
 
+    with open(os.path.join(abspath + '/' + heading, 'ref.txt'), 'w') as r:  # store referer link in ref.txt
+        r.write(url)
+
 # list all the directories
 dirs = [d for d in os.listdir('.') if os.path.isdir(d) and not d.startswith('.')]
 
@@ -97,13 +116,15 @@ for directory in dirs:
 
         br = mechanize.Browser()
         user_agent_string = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:12.0) Gecko/20100101 Firefox/12.0'
-        br.addheaders = [('User-Agent', user_agent_string)]
+        with open('ref.txt', 'r') as r:
+            referer_string = r.read().strip()
+
+        br.addheaders = [('user-Agent', user_agent_string), ('referer', referer_string)]
 
         reader = csv.reader(f, delimiter='@')
         for row in reader:
             title = row[0].replace('/', '-').replace(':', '-')
             link = row[1]
-
             # skip 1 iteration if zip file of title name exists
             if os.path.exists(title + '.zip'):
                 print "Already downloaded and zipped " + title
@@ -111,9 +132,17 @@ for directory in dirs:
 
             # don't load link and write if thumbs.html already exists
             if not os.path.exists(os.path.join(title, 'thumbs.html')):
-                time.sleep(0.25)
+                # time.sleep(2)
                 print "Loading publication link: " + link
-                page = br.open(link).read()
+                try:
+                    random_user_agent = random.choice(user_agent_list)
+                    br.addheaders = [('user-agent', random_user_agent)]
+                    page = br.open(link).read()
+                except urllib2.URLError, e:
+                    print e.reason
+
+                # request = br.request
+                # print request.header_items()
 
                 try:
                     os.mkdir(os.path.join(abspath, title))
@@ -125,6 +154,10 @@ for directory in dirs:
             else:
                 print "Already exists! folder: " + title + " and thumbs.html"
 
+            if not os.path.exists(os.path.join(title, 'ref.txt')):  # store a referer link for the images
+                with open(os.path.join(abspath + '/' + title, 'ref.txt'), 'w') as tref:
+                    tref.write(link)
+
     # get a list of folder names, cd into it, parse the thumbs.html file and store the urls of the image in a file
     folders = [d for d in os.listdir('.') if os.path.isdir(d) and not d.startswith('.')]
     base_image_url = 'http://eap.bl.uk/'
@@ -133,6 +166,13 @@ for directory in dirs:
         print "Switched to folder: " + f + ". Downloading images."
         image_soup = BeautifulSoup(open('thumbs.html', 'r'), 'html.parser')
         ul = image_soup.find('ul', class_='ad-thumb-list')
+
+        # add image referer link
+        with open('ref.txt', 'r') as image_referer:
+            img_ref = image_referer.read().strip()
+
+        random_user_agent = random.choice(user_agent_list)
+        br.addheaders = [('user-agent', random_user_agent), ('Referer', img_ref)]
 
         try:
             for li in ul.find_all('li'):
@@ -144,7 +184,11 @@ for directory in dirs:
                 # don't download image if already exists
                 if not os.path.exists(image_file_name):
                     # download and write the image
-                    time.sleep(0.25)
+                    time.sleep(2)
+
+                    random_user_agent = random.choice(user_agent_list)
+                    br.addheaders = [('user-agent', random_user_agent)]
+
                     print "Retrieving image: " + full_image_link
                     br.retrieve(full_image_link, image_path)
                 else:
