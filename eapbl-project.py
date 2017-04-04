@@ -178,7 +178,7 @@ for directory in dirs:
             for li in ul.find_all('li'):
                 image_link = li.a['href']
                 full_image_link = base_image_url + li.a['href']
-                image_file_name = image_link.replace('/', '_')
+                image_file_name = image_link.replace('/', '_').strip('_')  # strip leading '_' from image_file_name
                 image_path = os.path.join(os.path.abspath('.'), image_file_name)
 
                 # don't download image if already exists
