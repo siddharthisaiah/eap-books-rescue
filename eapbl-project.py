@@ -4,7 +4,7 @@ import mechanize
 from bs4 import BeautifulSoup
 import os
 import csv
-import zipfile
+import sys
 import shutil
 import time
 import urllib2
@@ -13,6 +13,9 @@ import random
 '''
 Program to download images from the endangered archives collection from http://eap.bl.uk/database/collections.a4d
 '''
+
+if sys.version_info[0] != 2:
+    raise Exception("Python 2 is required to run this script.")
 
 # list of project urls to downloads
 urls = ['http://eap.bl.uk/database/results.a4d?projID=EAP023',  # EAP023 Preserving Marathi manuscripts and making them accessible
