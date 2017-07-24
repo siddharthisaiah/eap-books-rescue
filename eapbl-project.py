@@ -34,7 +34,7 @@ urls = ['http://eap.bl.uk/database/results.a4d?projID=EAP023',  # EAP023 Preser
         'http://eap.bl.uk/database/results.a4d?projID=EAP458',  # EAP458 Constituting a digital archive of Tamil agrarian history during the colonial period
         'http://eap.bl.uk/database/results.a4d?projID=EAP584',  # EAP584 Preserving memory II - documentation and digitisation of palm leaf manuscripts from Kerala, India
         'http://eap.bl.uk/database/results.a4d?projID=EAP689',  # EAP689 Constituting a digital archive of Tamil agrarian history (1650-1950) - phase II
-        'http://eap.bl.uk/database/results.a4d?projID=EAP692'   # EAP692 Documentation of endangered temple art of Tamil Nadu
+        'http://eap.bl.uk/database/results.a4d?projID=EAP692',  # EAP692 Documentation of endangered temple art of Tamil Nadu
         'http://eap.bl.uk/database/results.a4d?projID=EAP759'   # EAP759 Survey of Bengal puthis discovered in Sundarbans, South 24 Parganas, West Bengal
         ]
 
