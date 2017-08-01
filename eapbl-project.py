@@ -33,6 +33,8 @@ urls = ['http://eap.bl.uk/database/results.a4d?projID=EAP023',  # EAP023 Preser
         'http://eap.bl.uk/database/results.a4d?projID=EAP372',  # EAP372 Preserving early periodicals and newspapers of Tamilnadu and Pondichery
         'http://eap.bl.uk/database/results.a4d?projID=EAP458',  # EAP458 Constituting a digital archive of Tamil agrarian history during the colonial period
         'http://eap.bl.uk/database/results.a4d?projID=EAP584',  # EAP584 Preserving memory II - documentation and digitisation of palm leaf manuscripts from Kerala, India
+        'http://eap.bl.uk/database/results.a4d?projID=EAP676',  # EAP676 Survey of Buddhist Sanskrit manuscripts in the possession of Vajrayana Viharas and Newar Buddhist families in Lalitpur in the Kathmandu valley, Nepal
+        'http://eap.bl.uk/database/results.a4d?projID=EAP683',  # EAP683 Rāmamālā Library manuscript project
         'http://eap.bl.uk/database/results.a4d?projID=EAP689',  # EAP689 Constituting a digital archive of Tamil agrarian history (1650-1950) - phase II
         'http://eap.bl.uk/database/results.a4d?projID=EAP692'   # EAP692 Documentation of endangered temple art of Tamil Nadu
         ]
