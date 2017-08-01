@@ -36,7 +36,8 @@ urls = ['http://eap.bl.uk/database/results.a4d?projID=EAP023',  # EAP023 Preser
         'http://eap.bl.uk/database/results.a4d?projID=EAP676',  # EAP676 Survey of Buddhist Sanskrit manuscripts in the possession of Vajrayana Viharas and Newar Buddhist families in Lalitpur in the Kathmandu valley, Nepal
         'http://eap.bl.uk/database/results.a4d?projID=EAP683',  # EAP683 Rāmamālā Library manuscript project
         'http://eap.bl.uk/database/results.a4d?projID=EAP689',  # EAP689 Constituting a digital archive of Tamil agrarian history (1650-1950) - phase II
-        'http://eap.bl.uk/database/results.a4d?projID=EAP692'   # EAP692 Documentation of endangered temple art of Tamil Nadu
+        'http://eap.bl.uk/database/results.a4d?projID=EAP692',  # EAP692 Documentation of endangered temple art of Tamil Nadu
+        'http://eap.bl.uk/database/results.a4d?projID=EAP759'   # EAP759 Survey of Bengal puthis discovered in Sundarbans, South 24 Parganas, West Bengal
         ]
 
 user_agent_list = ['Mozilla/5.0 (compatible; MSIE 9.0; AOL 9.7; AOLBuild 4343.19; Windows NT 6.1; WOW64; Trident/5.0; FunWebProducts)',
